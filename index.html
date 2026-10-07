@@ -263,6 +263,9 @@ footer{border-top:1px solid var(--border-subtle);padding-block:var(--s16) var(--
 
 /* in-page jumps glide instead of cutting, and clear the sticky header */
 html{scroll-behavior:smooth}
+/* focus is moved on a jump so the next Tab starts in the right place, but a
+   programmatic focus must not paint a box around a whole section */
+[tabindex="-1"]:focus,[tabindex="-1"]:focus-visible{outline:none}
 :target,#work,#cv,#capabilities,#education,#feedback,#contact{scroll-margin-top:84px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
@@ -998,6 +1001,13 @@ html{scroll-behavior:smooth}
     /* long jumps must not crawl: scale with distance, then cap */
     var dur = Math.min(900, Math.max(420, Math.abs(dist) * 0.32));
     var t0 = performance.now();
+    var settled = false;
+    function finish(){
+      if (settled) return;
+      settled = true;
+      window.scrollTo({ top: to, behavior: 'instant' });
+      if (done) done();
+    }
     function step(now){
       var t = Math.min(1, (now - t0) / dur);
       /* easeInOutCubic: settles without overshoot */
@@ -1007,10 +1017,11 @@ html{scroll-behavior:smooth}
          times a second leaves the page almost still */
       window.scrollTo({ top: from + dist * e, behavior: 'instant' });
       if (t < 1) { requestAnimationFrame(step); return; }
-      window.scrollTo({ top: to, behavior: 'instant' });
-      if (done) done();
+      finish();
     }
     requestAnimationFrame(step);
+    /* rAF does not run in a background tab — land anyway */
+    setTimeout(finish, dur + 280);
   }
 
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
