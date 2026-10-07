@@ -141,7 +141,13 @@ section.wrap::before{content:'';position:absolute;top:0;left:var(--s6);right:var
 @media(max-width:900px){.caps{grid-template-columns:1fr}}
 
 /* tabs */
-.tabbar{display:flex;gap:6px;overflow-x:auto;padding-bottom:var(--s2);margin-bottom:var(--s10);scrollbar-width:thin}
+.tabbar{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:var(--s10);
+  scrollbar-width:thin;scrollbar-color:var(--border-strong) transparent;
+  mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent 100%)}
+.tabbar::-webkit-scrollbar{height:5px}
+.tabbar::-webkit-scrollbar-track{background:transparent}
+.tabbar::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:99px}
+.tabbar::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
 .tab{flex:none;background:transparent;border:1px solid var(--border-subtle);color:var(--text-muted);font-family:var(--text);font-size:13px;font-weight:500;padding:9px 15px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:all .15s}
 .tab:hover{color:var(--text-primary);border-color:var(--border-strong)}
 .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-contrast);font-weight:600}
@@ -344,7 +350,7 @@ footer{border-top:1px solid var(--border-subtle);padding-block:var(--s16) var(--
 
 <section class="wrap" id="work">
   <div class="sec-head"><hr class="rule"><h2>Selected work</h2>
-    <p class="lede" style="max-width:62ch">Eight programmes. Each tab carries that programme's own figures — nothing pooled, nothing borrowed from the initiative around it.</p></div>
+    <p class="lede" style="max-width:62ch">Nine programmes. Each tab carries that programme's own figures — nothing pooled, nothing borrowed from the initiative around it.</p></div>
 
   <div class="tabbar" role="tablist" aria-label="Projects">
     <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="true"><b>01</b>DEPI</button>
