@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://salama.vercel.app/sitemap.xml
+Sitemap: https://salama-pm.vercel.app/sitemap.xml
